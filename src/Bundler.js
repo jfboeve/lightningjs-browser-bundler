@@ -35,7 +35,7 @@ export const bundle = async (url) => {
 }
 
 export const template = async (template = 'base') => {
-    return bundle(`./templates/${template}`);
+    return bundle(`./node-modules/@lightningjs/browser-bundler/templates/${template}`);
 }
 
 export default {
