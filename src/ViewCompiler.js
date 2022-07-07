@@ -1,4 +1,4 @@
-import CodeBlob from './CodeBlob';
+import CodeBlob from './CodeBlob.js';
 
 const getDependencies = (code) => {
     const reg = /import(?:[\s*]([\w*{}\n\r\t, ]+)[\s*]from)?[\s*](?:["'](.*[\w]+)["'])?/g;
