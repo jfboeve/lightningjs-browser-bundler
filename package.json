@@ -1,4 +1,7 @@
 {
     "name": "@lightningjs/browser-bundler",
-    "version": "0.0.2"
+    "version": "0.0.2",
+    "dependencies": {
+        "vue": "^3.2.33"
+    }
   }
