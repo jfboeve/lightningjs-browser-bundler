@@ -1,0 +1,7 @@
+{
+    "dependencies": {
+        "@lightningjs/core": "https://cdn.skypack.dev/@lightningjs/core"
+    },
+    "scripts": ["launch", "Component", "App"],
+    "sample": "Component"
+}
