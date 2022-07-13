@@ -9,7 +9,7 @@ const templates = {
 export const bundle = async (url) => {
     const bundle = await fetch(`${url}/bundle.json`).then((r) => r.json());
     let scripts = [...new Set(bundle.scripts)];
-    let dependencies = bundle.dependencies;
+    let dependencies = bundle.dependencies || {};
     
     scripts = await Promise.all(scripts.map(async(script) => {
         const scriptImport = await import(`${url}/${script}.js?raw`);
