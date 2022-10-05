@@ -1,9 +1,11 @@
 import baseTemplate from './templates/base.json';
 import componentTemplate from './templates/component.json';
+import playgroundTemplate from './templates/playground.json';
 
 const templates = {
     base: baseTemplate,
-    component: componentTemplate
+    component: componentTemplate,
+    playground: playgroundTemplate
 }
 
 export const bundle = async (url) => {
