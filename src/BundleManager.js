@@ -53,7 +53,7 @@ const BundleManager = {
     async create() {
         return template(type);
     },
-    async load() {
+    async load(hash = '') {
         if(!hash.length) {
             this.bundle = await this.create();
             this.updateHash();
