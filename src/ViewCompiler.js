@@ -98,9 +98,8 @@ export const compile = (bundle, storage) => {
 }
 
 export class ViewCompiler {
-    constructor(config) {
+    constructor() {
         this.storage = new Map();
-        this.ref = config.ref;
     }
 
     async compile(bundle) {

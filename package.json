@@ -1,6 +1,6 @@
 {
     "name": "@lightningjs/browser-bundler",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "files": [
         "index.js",
         "src/**"
@@ -15,5 +15,8 @@
     "author": {
         "name": "Jeffrey Boevé",
         "email": "jeffrey_boeve@comcast.com"
+    },
+    "dependencies": {
+        "lz-string": "^1.4.4"
     }
 }

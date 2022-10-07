@@ -1,3 +1,5 @@
+import LZString from 'lz-string';
+
 import baseTemplate from './templates/base.json';
 import componentTemplate from './templates/component.json';
 import playgroundTemplate from './templates/playground.json';
@@ -8,44 +10,12 @@ const templates = {
     playground: playgroundTemplate
 }
 
-export const bundle = async (url) => {
-    const bundle = await fetch(`${url}/bundle.json`).then((r) => r.json());
-    let scripts = [...new Set(bundle.scripts)];
-    let dependencies = bundle.dependencies || {};
-    
-    scripts = await Promise.all(scripts.map(async(script) => {
-        const scriptImport = await import(`${url}/${script}.js?raw`);
-        return {
-            file: `${script}.js`,
-            code: scriptImport.default
-        }
-    }));
+export const decompress = async (str) => {
+    return JSON.parse(LZString.decompressFromEncodedURIComponent(str));
+}
 
-    const arrayToObject = {};
-    scripts.forEach(({file, code}) => {
-        arrayToObject[file] = {
-            file,
-            code
-        }
-    });
-    scripts = arrayToObject;
-    if(bundle.template) {
-        const bTemplate = await template(bundle.template);
-        scripts = {
-            ...bTemplate.scripts,
-            ...scripts
-        };
-        dependencies = {
-            ...bTemplate.dependencies,
-            ...dependencies
-        }
-    }
-
-    return {
-        ...bundle,
-        scripts,
-        dependencies
-    }
+export const compress = async (bundle) => {
+    return LZString.compressToEncodedURIComponent(JSON.stringify(bundle));
 }
 
 export const template = async (template = 'base') => {
@@ -53,6 +23,7 @@ export const template = async (template = 'base') => {
 }
 
 export default {
-    bundle,
-    template
+    template,
+    compress,
+    decompress
 }
