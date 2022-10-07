@@ -50,7 +50,7 @@ const BundleManager = {
             window.location.hash = compress(this.bundle);
         }
     },
-    async create() {
+    async create(type = 'playground') {
         return template(type);
     },
     async load(hash = '') {
