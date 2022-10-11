@@ -265,7 +265,6 @@ const getDecompression = (length, resetValue, getNextValue) => {
     if(bits === 2) {
         return "";
     }
-
     if(bits < 2) {
         maxpower = Math.pow(2, bits === 1 ? 16 : 8);
         bits = 0;
@@ -290,7 +289,6 @@ const getDecompression = (length, resetValue, getNextValue) => {
         if(data.index > length) {
             return "";
         }
-
         bits = 0;
         maxpower = Math.pow(2, numBits);
         power = 1;
@@ -304,11 +302,7 @@ const getDecompression = (length, resetValue, getNextValue) => {
             bits |= (resb>0 ? 1 : 0) * power;
             power <<= 1;
         }
-
-        if(bits === 2) {
-            return result.join('');
-        }
-
+        c = bits;
         if(bits < 2) {
             maxpower = Math.pow(2, bits === 1 ? 16 : 8);
             bits = 0;
@@ -327,6 +321,10 @@ const getDecompression = (length, resetValue, getNextValue) => {
             dictionary[dictSize++] = f(bits);
             c = dictSize - 1;
             enlargeIn--;
+        }
+
+        if(bits === 2) {
+            return result.join('');
         }
 
         if(enlargeIn === 0) {
