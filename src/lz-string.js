@@ -243,7 +243,6 @@ const getDecompression = (length, resetValue, getNextValue) => {
         dictSize = 4,
         numBits = 3,
         entry = "",
-        i,
         w,
         bits, resb, maxpower, power,
         c,
@@ -457,7 +456,7 @@ export const decompressFromEncodedURIComponent = (input) => {
         return null;
     }
     input = input.replace(/ /g, "+");
-    return getDecompression(input, 32, (index) => getBaseValue(keyStrUriSafe, input.charAt(index)));
+    return getDecompression(input.length, 32, (index) => getBaseValue(keyStrUriSafe, input.charAt(index)));
 }
 
 export default {
