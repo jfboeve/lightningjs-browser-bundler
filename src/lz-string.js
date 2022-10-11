@@ -468,5 +468,7 @@ export default {
     compressToUTF16,
     decompressFromUTF16,
     compressToUint8Array,
-    decompressFromUint8Array
+    decompressFromUint8Array,
+    compressToEncodedURIComponent,
+    decompressFromEncodedURIComponent
 }
