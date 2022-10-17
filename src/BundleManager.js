@@ -12,7 +12,7 @@ const BundleManager = function(options) {
     const viewCompiler = new ViewCompiler();
 
     const MapProxy = function(obj) {
-        const m = new Map(obj);
+        const m = new Map(Object.entries(obj));
         return {
             set: (k, v) => {
                 generateBundle();
