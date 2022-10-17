@@ -11,7 +11,7 @@ const BundleManager = function(options) {
     let scripts, dependencies;
     const viewCompiler = new ViewCompiler();
 
-    const MapProxy = (obj) => {
+    const MapProxy = function(obj) {
         const m = new Map(obj);
         return {
             set: (k, v) => {
