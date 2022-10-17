@@ -53,7 +53,7 @@ const BundleManager = function(options = {}) {
 
     const attachViewport = (view) => {
         viewport = view;
-        if(this.scripts.size > 0) {
+        if(scripts.size > 0) {
             loadViewport();
         }
     }
