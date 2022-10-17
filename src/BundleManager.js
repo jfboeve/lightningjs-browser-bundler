@@ -6,11 +6,34 @@ import {
 } from './Bundler';
 import ViewCompiler from './ViewCompiler';
 
-const BundleManager = (options = {}) => {
+const BundleManager = function(options) {
     let {hash = '', viewport = null, bundle = {}, autoUpdateHash = false} = options;
     let scripts, dependencies;
     const viewCompiler = new ViewCompiler();
+
+    const MapProxy = (obj) => {
+        const m = new Map(obj);
+        return {
+            set: (k, v) => {
+                generateBundle();
+                m.set(k, v);
+            },
+            delete: (k) => {
+                generateBundle();
+                m.delete(k);
+            },
+            clear: m.clear,
+            get: m.get,
+            has: m.has,
+            size: m.size
+        }
+    }
     
+    const unpack = ({scripts:s = {}, dependencies:d = {}}) => {
+        scripts = new MapProxy(s);
+        dependencies = new MapProxy(d);
+    }
+
     unpack(bundle);
 
     const clear = () => {
@@ -36,11 +59,6 @@ const BundleManager = (options = {}) => {
         }
         compile();
         return bundle;
-    }
-
-    const unpack = ({scripts:s = {}, dependencies:d = {}}) => {
-        scripts = new MapProxy(s);
-        dependencies = new MapProxy(d);
     }
 
     const loadViewport = () => {
@@ -85,24 +103,6 @@ const BundleManager = (options = {}) => {
         return {
             scripts,
             dependencies
-        }
-    }
-
-    const MapProxy = (obj) => {
-        const m = new Map(obj);
-        return {
-            set: (k, v) => {
-                generateBundle();
-                m.set(k, v);
-            },
-            delete: (k) => {
-                generateBundle();
-                m.delete(k);
-            },
-            clear: m.clear,
-            get: m.get,
-            has: m.has,
-            size: m.size
         }
     }
 
