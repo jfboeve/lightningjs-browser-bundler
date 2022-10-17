@@ -6,10 +6,13 @@ import baseTemplate from './templates/base.json';
 import componentTemplate from './templates/component.json';
 import playgroundTemplate from './templates/playground.json';
 
-const templates = {
-    base: baseTemplate,
-    component: componentTemplate,
-    playground: playgroundTemplate
+export const objectIsEmpty = (obj) => {
+    for(let prop in obj) {
+        if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+            return false;
+        }
+    }
+    return JSON.stringify(obj) === JSON.stringify({});
 }
 
 export const decompress = async (str) => {
@@ -18,6 +21,16 @@ export const decompress = async (str) => {
 
 export const compress = async (bundle) => {
     return compressToEncodedURIComponent(JSON.stringify(bundle));
+}
+
+export const updateWindowHash = async (bundle) => {
+    window.location.hash = await compress(bundle);
+}
+
+const templates = {
+    base: baseTemplate,
+    component: componentTemplate,
+    playground: playgroundTemplate
 }
 
 export const template = async (template = 'base') => {
