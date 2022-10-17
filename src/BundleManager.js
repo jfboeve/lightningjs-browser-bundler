@@ -12,8 +12,8 @@ const BundleManager = function(options = {}) {
     const viewCompiler = new ViewCompiler();
     
     const unpack = ({scripts:s = {}, dependencies:d = {}}) => {
-        scripts = new MapProxy(Object.entries(s));
-        dependencies = new MapProxy(Object.entries(d));
+        scripts = new Map(Object.entries(s));
+        dependencies = new Map(Object.entries(d));
     }
 
     unpack(bundle);
