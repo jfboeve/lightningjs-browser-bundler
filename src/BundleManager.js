@@ -3,35 +3,17 @@ import {
   objectIsEmpty,
   template,
   updateWindowHash,
-} from './Bundler';
-import ViewCompiler from './ViewCompiler';
+} from './Bundler.js';
+import ViewCompiler from './ViewCompiler.js';
 
-const BundleManager = function(options) {
+const BundleManager = function(options = {}) {
     let {hash = '', viewport = null, bundle = {}, autoUpdateHash = false} = options;
     let scripts, dependencies;
     const viewCompiler = new ViewCompiler();
-
-    const MapProxy = function(obj) {
-        const m = new Map(Object.entries(obj));
-        return {
-            set: (k, v) => {
-                generateBundle();
-                m.set(k, v);
-            },
-            delete: (k) => {
-                generateBundle();
-                m.delete(k);
-            },
-            clear: m.clear,
-            get: m.get,
-            has: m.has,
-            size: m.size
-        }
-    }
     
     const unpack = ({scripts:s = {}, dependencies:d = {}}) => {
-        scripts = new MapProxy(s);
-        dependencies = new MapProxy(d);
+        scripts = new MapProxy(Object.entries(s));
+        dependencies = new MapProxy(Object.entries(d));
     }
 
     unpack(bundle);
@@ -43,7 +25,7 @@ const BundleManager = function(options) {
     }
 
     const compile = async () => {
-        return viewCompiler.compile(bundle)
+        return viewCompiler.compile(generateBundle())
             .then((response) => {
                 return response;
             });
@@ -57,7 +39,6 @@ const BundleManager = function(options) {
         if(autoUpdateHash) {
             updateWindowHash(bundle);
         }
-        compile();
         return bundle;
     }
 
@@ -112,7 +93,9 @@ const BundleManager = function(options) {
         clear,
         load,
         attachViewport,
-        releaseViewport
+        releaseViewport,
+        compile,
+        generateBundle
     }
 };
 
