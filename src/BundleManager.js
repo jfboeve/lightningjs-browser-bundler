@@ -31,7 +31,7 @@ export default class BundleManager {
         this.bundle.scripts = Object.fromEntries(this.scripts);
         this.bundle.dependencies = Object.fromEntries(this.dependencies);
         if(this.autoUpdateHash) {
-            updateWindowHash(this.bundle);
+            this.hash = updateWindowHash(this.bundle);
         }
         return this.bundle;
     }
@@ -60,14 +60,14 @@ export default class BundleManager {
         this.clear();
         this.hash = options.hash || '';
         this.bundle = options.bundle || {};
-        this.autoUpdateHash = options.autoUpdateHash || autoUpdateHash;
-        this.viewport = options.viewport || viewport;
+        this.autoUpdateHash = options.autoUpdateHash || this.autoUpdateHash;
+        this.viewport = options.viewport || this.viewport;
 
-        if(hash.length === 0 && objectIsEmpty(bundle)) {
+        if(this.hash.length === 0 && objectIsEmpty(this.bundle)) {
             this.bundle = await template(options.template || 'playground');
         }
-        else if (hash.length > 0) {
-            this.bundle = await decompress(hash);
+        else if (this.hash.length > 0) {
+            this.bundle = await decompress(this.hash);
         }
 
         this.unpack(this.bundle);

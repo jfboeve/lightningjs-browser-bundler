@@ -24,7 +24,9 @@ export const compress = async (bundle) => {
 }
 
 export const updateWindowHash = async (bundle) => {
-    window.location.hash = await compress(bundle);
+    const hash = await compress(bundle);
+    window.location.hash = hash;
+    return hash;
 }
 
 const templates = {
