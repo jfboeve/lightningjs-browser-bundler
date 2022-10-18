@@ -88,8 +88,12 @@ const BundleManager = function(options = {}) {
     }
 
     return {
-        scripts,
-        dependencies,
+        scripts() {
+            return scripts;
+        },
+        dependencies() {
+            return dependencies;
+        },
         clear,
         load,
         attachViewport,
