@@ -52,8 +52,8 @@ export default class BundleManager {
 
     attachViewport(viewport) {
         this.viewport = viewport;
-        if(scripts.size > 0) {
-            loadViewport();
+        if(this.scripts.size > 0) {
+            this.loadViewport();
         }
     }
 
