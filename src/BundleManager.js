@@ -46,7 +46,7 @@ export default class BundleManager {
             return;
         }
         this.compile().then((url) => {
-            viewport.loadURL(url);
+            this.viewport.loadURL(url);
         });
     }
 
