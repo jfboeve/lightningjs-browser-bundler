@@ -1,4 +1,7 @@
-import { updateWindowHash } from './Bundler';
+import {
+  objectIsEmpty,
+  updateWindowHash,
+} from './Bundler';
 import ViewCompiler from './ViewCompiler.js';
 
 export default class BundleManager {
