@@ -24,10 +24,10 @@ export default class BundleManager {
     }
 
     async compile() {
-        return this.viewCompiler.compile(this.generateBundle());
+        return this.viewCompiler.compile(this.packageBundle());
     }
 
-    generateBundle() {
+    packageBundle() {
         this.bundle.scripts = Object.fromEntries(this.scripts);
         this.bundle.dependencies = Object.fromEntries(this.dependencies);
         if(this.autoUpdateHash) {
@@ -56,7 +56,7 @@ export default class BundleManager {
         this.viewport = null;
     }
 
-    async load() {
+    async load(options) {
         this.clear();
         this.hash = options.hash || '';
         this.bundle = options.bundle || {};
@@ -72,7 +72,7 @@ export default class BundleManager {
 
         this.unpack(this.bundle);
         this.loadViewport();
-        return this.generateBundle(this.bundle);
+        return this.packageBundle();
     }
 }
 /*
