@@ -29,14 +29,19 @@ export default class BundleManager {
     }
 
     async compile() {
-        return this.viewCompiler.compile(this.packageBundle());
+        const bundle = await this.packageBundle();
+        return this.viewCompiler.compile(bundle)
+            .then((response) => {
+                this.loadViewport();
+                return response;
+            });
     }
 
-    packageBundle() {
+    async packageBundle() {
         this.bundle.scripts = Object.fromEntries(this.scripts);
         this.bundle.dependencies = Object.fromEntries(this.dependencies);
         if(this.autoUpdateHash) {
-            this.hash = updateWindowHash(this.bundle);
+            this.hash = await updateWindowHash(this.bundle);
         }
         return this.bundle;
     }
