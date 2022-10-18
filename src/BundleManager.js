@@ -57,7 +57,7 @@ export default class BundleManager {
     }
 
     async load() {
-        clear();
+        this.clear();
         this.hash = options.hash || '';
         this.bundle = options.bundle || {};
         this.autoUpdateHash = options.autoUpdateHash || autoUpdateHash;
