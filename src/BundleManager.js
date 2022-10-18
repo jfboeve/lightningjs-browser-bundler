@@ -2,7 +2,6 @@ import {
   decompress,
   objectIsEmpty,
   template,
-  updateWindowHash,
 } from './Bundler';
 import ViewCompiler from './ViewCompiler.js';
 
@@ -40,9 +39,9 @@ export default class BundleManager {
     async packageBundle() {
         this.bundle.scripts = Object.fromEntries(this.scripts);
         this.bundle.dependencies = Object.fromEntries(this.dependencies);
-        if(this.autoUpdateHash) {
-            this.hash = await updateWindowHash(this.bundle);
-        }
+        // if(this.autoUpdateHash) {
+        //     this.hash = await updateWindowHash(this.bundle);
+        // }
         return this.bundle;
     }
 
