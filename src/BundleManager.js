@@ -1,11 +1,81 @@
-import {
-  decompress,
-  objectIsEmpty,
-  template,
-  updateWindowHash,
-} from './Bundler.js';
+import { updateWindowHash } from './Bundler';
 import ViewCompiler from './ViewCompiler.js';
 
+export default class BundleManager {
+    constructor(options = {}) {
+        const {hash = '', viewport = null, bundle = {}, autoUpdateHash = false} = options;
+        this.viewCompiler = new ViewCompiler();
+        this.hash = hash;
+        this.viewport = viewport;
+        this.autoUpdateHash = autoUpdateHash;
+        this.bundle = bundle;
+        this.unpack(bundle);
+    }
+
+    clear() {
+        this.hash = '';
+        this.scripts.clear();
+        this.dependencies.clear();
+    }
+
+    unpack({scripts = {}, dependencies = {}}) {
+        this.scripts = new Map(Object.entries(scripts));
+        this.dependencies = new Map(Object.entries(dependencies));
+    }
+
+    async compile() {
+        return this.viewCompiler.compile(this.generateBundle());
+    }
+
+    generateBundle() {
+        this.bundle.scripts = Object.fromEntries(this.scripts);
+        this.bundle.dependencies = Object.fromEntries(this.dependencies);
+        if(this.autoUpdateHash) {
+            updateWindowHash(this.bundle);
+        }
+        return this.bundle;
+    }
+
+    loadViewport() {
+        if(!this.viewport) {
+            return;
+        }
+        this.compile().then((url) => {
+            viewport.loadURL(url);
+        });
+    }
+
+    attachViewport(viewport) {
+        this.viewport = viewport;
+        if(scripts.size > 0) {
+            loadViewport();
+        }
+    }
+
+    releaseViewport () {
+        this.viewport = null;
+    }
+
+    async load() {
+        clear();
+        this.hash = options.hash || '';
+        this.bundle = options.bundle || {};
+        this.autoUpdateHash = options.autoUpdateHash || autoUpdateHash;
+        this.viewport = options.viewport || viewport;
+
+        if(hash.length === 0 && objectIsEmpty(bundle)) {
+            this.bundle = await template(options.template || 'playground');
+        }
+        else if (hash.length > 0) {
+            this.bundle = await decompress(hash);
+        }
+
+        this.unpack(this.bundle);
+        this.loadViewport();
+        return this.generateBundle(this.bundle);
+    }
+}
+/*
 const BundleManager = function(options = {}) {
     let {hash = '', viewport = null, bundle = {}, autoUpdateHash = false} = options;
     let scripts, dependencies;
@@ -103,4 +173,4 @@ const BundleManager = function(options = {}) {
     }
 };
 
-export default BundleManager;
+export default BundleManager;*/
