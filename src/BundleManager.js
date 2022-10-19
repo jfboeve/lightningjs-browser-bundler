@@ -43,7 +43,7 @@ export default class BundleManager {
         this.bundle.scripts = Object.fromEntries(this.scripts);
         this.bundle.dependencies = Object.fromEntries(this.dependencies);
         if(this.autoUpdateHash) {
-            this.hash = await updateWindowHash(this.bundle);
+            updateWindowHash(this.bundle);
         }
         return this.bundle;
     }
