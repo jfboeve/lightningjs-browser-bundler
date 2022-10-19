@@ -33,7 +33,7 @@ export default class BundleManager {
         return this.viewCompiler.compile(bundle)
             .then((response) => {
                 if(this.viewport) {
-                    this.viewport.loadURL(url);
+                    this.viewport.loadURL(response);
                 }
                 return response;
             });
