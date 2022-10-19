@@ -2,6 +2,7 @@ import {
   decompress,
   objectIsEmpty,
   template,
+  updateWindowHash,
 } from './Bundler';
 import ViewCompiler from './ViewCompiler.js';
 
